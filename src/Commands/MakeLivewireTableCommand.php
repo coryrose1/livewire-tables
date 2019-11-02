@@ -2,11 +2,11 @@
 
 namespace Coryrose\LivewireTables\Commands;
 
+use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Livewire\Commands\FileManipulationCommand;
-use Illuminate\Console\DetectsApplicationNamespace;
 use Livewire\Commands\ComponentParser;
+use Livewire\Commands\FileManipulationCommand;
 
 class MakeLivewireTableCommand extends FileManipulationCommand
 {
@@ -41,21 +41,26 @@ class MakeLivewireTableCommand extends FileManipulationCommand
         if (File::exists($classPath) && ! $force) {
             $this->line("<options=bold,reverse;fg=red> WHOOPS-IE-TOOTLES </> 😳 \n");
             $this->line("<fg=red;options=bold>Class already exists:</> {$this->parser->relativeClassPath()}");
+
             return false;
         }
         $this->ensureDirectoryExists($classPath);
         File::put($classPath, $this->classContents());
+
         return $classPath;
     }
+
     protected function createView($force = false)
     {
         $viewPath = $this->parser->viewPath();
         if (File::exists($viewPath) && ! $force) {
             $this->line("<fg=red;options=bold>View already exists:</> {$this->parser->relativeViewPath()}");
+
             return false;
         }
         $this->ensureDirectoryExists($viewPath);
         File::put($viewPath, $this->viewContents());
+
         return $viewPath;
     }
 
@@ -95,5 +100,4 @@ class MakeLivewireTableCommand extends FileManipulationCommand
             ->push($component)
             ->implode('.');
     }
-
 }

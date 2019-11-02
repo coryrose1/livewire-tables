@@ -2,10 +2,10 @@
 
 namespace Coryrose\LivewireTables\Commands;
 
-use Illuminate\Support\Facades\File;
-use Livewire\Commands\FileManipulationCommand;
 use Illuminate\Console\DetectsApplicationNamespace;
+use Illuminate\Support\Facades\File;
 use Livewire\Commands\ComponentParser;
+use Livewire\Commands\FileManipulationCommand;
 use ReflectionClass;
 
 class ScaffoldLivewireTableCommand extends FileManipulationCommand
@@ -25,7 +25,7 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
 
         $view = $this->createView();
 
-        $view && $this->line("<options=bold,reverse;fg=green> Table Scaffolded </> ");
+        $view && $this->line('<options=bold,reverse;fg=green> Table Scaffolded </> ');
         $view && $this->line("<options=bold;fg=green>VIEW:</>  {$this->parser->relativeViewPath()}");
     }
 
@@ -34,6 +34,7 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
         $viewPath = $this->parser->viewPath();
         $this->ensureDirectoryExists($viewPath);
         File::put($viewPath, $this->viewContents());
+
         return $viewPath;
     }
 
@@ -59,40 +60,43 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
     protected function headerRows(array $fields)
     {
         $cells = [];
-        foreach ($fields as $key => $field)
-        {
-            $cell = '<td' . $this->getHeaderClass($field) . $this->getSortableAction($key, $field) . '>' . $field['title'] . '</td>' . PHP_EOL;
+        foreach ($fields as $key => $field) {
+            $cell = '<td'.$this->getHeaderClass($field).$this->getSortableAction($key, $field).'>'.$field['title'].'</td>'.PHP_EOL;
             array_push($cells, $cell);
         }
+
         return implode('', $cells);
     }
 
     protected function dataRows(array $fields)
     {
         $cells = [];
-        foreach ($fields as $key => $field)
-        {
-            $cell = '<td' . $this->getDataClass($field) . '>{{ $d->' . $field['name'] . ' }}</td>' . PHP_EOL;
+        foreach ($fields as $key => $field) {
+            $cell = '<td'.$this->getDataClass($field).'>{{ $d->'.$field['name'].' }}</td>'.PHP_EOL;
             array_push($cells, $cell);
         }
+
         return implode('', $cells);
     }
 
     protected function getDataClass(array $field)
     {
-        if (isset($field['cell_class']) && $field['cell_class'] && $field['cell_class'] !== "")
-            return ' class="' . $field['cell_class'] . '"';
+        if (isset($field['cell_class']) && $field['cell_class'] && $field['cell_class'] !== '') {
+            return ' class="'.$field['cell_class'].'"';
+        }
     }
 
     protected function getHeaderClass(array $field)
     {
-        if (isset($field['header_class']) && $field['header_class'] && $field['header_class'] !== "")
-            return ' class="' . $field['header_class'] . '"';
+        if (isset($field['header_class']) && $field['header_class'] && $field['header_class'] !== '') {
+            return ' class="'.$field['header_class'].'"';
+        }
     }
 
     protected function getSortableAction($key, array $field)
     {
-        if (isset($field['sortable']) && $field['sortable'])
-            return ' wire:click="$emit(\'sortColumn\', ' . $key . ')"';
+        if (isset($field['sortable']) && $field['sortable']) {
+            return ' wire:click="$emit(\'sortColumn\', '.$key.')"';
+        }
     }
 }
