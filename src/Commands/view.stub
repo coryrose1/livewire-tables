@@ -1,0 +1,3 @@
+<div>
+    Build out [class].php and run <code><strong>php artisan livewire-tables:scaffold [class]</strong></code> to generate this table.
+</div>

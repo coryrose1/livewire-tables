@@ -1,0 +1,38 @@
+<?php
+
+namespace [namespace];
+
+use Coryrose\LivewireTables\LivewireTable;
+use Livewire\WithPagination;
+use App\User;
+
+class [class] extends LivewireTable
+{
+    use WithPagination;
+
+    public $paginate = true;
+    public $pagination = 10;
+
+    public $fields = [
+        [
+            'title' => 'ID',
+            'name' => 'id',
+            'header_class' => '',
+            'cell_class' => '',
+            'sortable' => true,
+        ]
+    ];
+
+    public function render()
+    {
+        return view('[view]', [
+            'fields' => $this->fields,
+            'data' => $this->query(),
+        ]);
+    }
+
+    protected function model()
+    {
+        return User::class;
+    }
+}

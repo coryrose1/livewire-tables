@@ -1,0 +1,21 @@
+<div>
+    <table>
+        <thead>
+        <tr>
+           [header]
+        </tr>
+        </thead>
+        <tbody>
+        @foreach ($data as $d)
+            <tr>
+                [data]
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    @if ($paginate)
+    <div>
+        {{ $data->links() }}
+    </div>
+    @endif
+</div>
