@@ -21,7 +21,7 @@ Run the make command to generate a table class:
 
 `php artisan livewire-tables:make UsersTable`
 
-*App/Http/Livewire/Components/Tables/UsersTable.php*
+*App/Http/Livewire/Tables/UsersTable.php*
 
 ```
 ...
