@@ -12,6 +12,7 @@ class [class] extends LivewireModelTable
 
     public $paginate = true;
     public $pagination = 10;
+    public $hasSearch = true;
 
     public $fields = [
         [
@@ -20,6 +21,7 @@ class [class] extends LivewireModelTable
             'header_class' => '',
             'cell_class' => '',
             'sortable' => true,
+            'searchable' => true,
         ]
     ];
 
@@ -27,7 +29,7 @@ class [class] extends LivewireModelTable
     {
         return view('[view]', [
             'fields' => $this->fields,
-            'data' => $this->query(),
+            'rowData' => $this->query(),
         ]);
     }
 

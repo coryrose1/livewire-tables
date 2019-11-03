@@ -1,4 +1,14 @@
 <div>
+    @if ($hasSearch)
+    <div>
+        <div style="position: relative; display: inline-block;">
+        <input type="text" wire:model="search" />
+            @if ($search)
+        <button wire:click="clearSearch" style="position: absolute; right: 5px;">&#10005;</button>
+                @endif
+        </div>
+    </div>
+    @endif
     <table>
         <thead>
         <tr>
@@ -6,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach ($data as $d)
+        @foreach ($rowData as $row)
             <tr>
                 [data]
             </tr>
@@ -15,7 +25,7 @@
     </table>
     @if ($paginate)
     <div>
-        {{ $data->links() }}
+        {{ $rowData->links() }}
     </div>
     @endif
 </div>
