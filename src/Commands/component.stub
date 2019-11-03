@@ -2,11 +2,11 @@
 
 namespace [namespace];
 
-use Coryrose\LivewireTables\LivewireTable;
+use Coryrose\LivewireTables\LivewireModelTable;
 use Livewire\WithPagination;
 use App\User;
 
-class [class] extends LivewireTable
+class [class] extends LivewireModelTable
 {
     use WithPagination;
 

@@ -30,7 +30,7 @@ class MakeLivewireTableCommand extends FileManipulationCommand
 
         $this->refreshComponentAutodiscovery();
 
-        ($class && $view) && $this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
+        ($class && $view) && $this->line("<options=bold,reverse;fg=green> TABLE COMPONENT CREATED </> 🤙\n");
         $class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
         $view && $this->line("<options=bold;fg=green>VIEW:</>  {$this->parser->relativeViewPath()}");
     }

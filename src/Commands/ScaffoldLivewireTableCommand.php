@@ -72,7 +72,7 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
     {
         $cells = [];
         foreach ($fields as $key => $field) {
-            $cell = '<td'.$this->getDataClass($field).'>{{ $d->'.$field['name'].' }}</td>'.PHP_EOL;
+            $cell = '<td'.$this->getDataClass($field).'>{{ $d->'.str_replace('.','->',$field['name']).' }}</td>'.PHP_EOL;
             array_push($cells, $cell);
         }
 
