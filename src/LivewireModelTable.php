@@ -122,10 +122,10 @@ class LivewireModelTable extends Component
         $this->search = null;
     }
 
-    protected function setCssArray(): array
+    public static function setCssArray(): array
     {
-        if (isset($this->css) && $this->css !== null) {
-            return array_merge(config('livewire-tables.css'), $this->css);
+        if (isset(self::$css) && self::$css !== null) {
+            return array_merge(config('livewire-tables.css'), self::$css);
         } else {
             return config('livewire-tables.css', []);
         }

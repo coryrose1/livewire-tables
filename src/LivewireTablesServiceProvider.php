@@ -87,7 +87,7 @@ class LivewireTablesServiceProvider extends ServiceProvider
         // Publishing the configuration file.
         $this->publishes([
             __DIR__.'/../config/livewire-tables.php' => config_path('livewire-tables.php'),
-        ], 'livewire-tables.config');
+        ], 'livewire-tables');
 
         // Publishing the views.
         /*$this->publishes([
