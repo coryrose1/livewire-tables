@@ -104,6 +104,22 @@ class UsersTable extends LivewireModelTable
 
 #### Configure the component options
 
+First, set your base model in the `model()` method in the following format:
+```
+public function model()
+{
+    return User::class;
+}
+```
+
+To eager load relationships, use the `with()` and return an array of relation(s):
+```
+public function with()
+{
+    return ['address', 'post'];
+}
+```
+
 The following are editable public properties for the table class:
 
 | key  | description | value 
