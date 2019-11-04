@@ -47,7 +47,7 @@ class UsersTable extends LivewireTable
     {
         return view(‘livewire.tables.users-table’, [
             ‘fields’ => $this->fields,
-            ‘data’ => $this->query(),
+            ‘rowData’ => $this->query(),
         ]);
     }
 
@@ -77,16 +77,16 @@ When ready, scaffold the table view using the scaffold command:
         </tr>
         </thead>
         <tbody>
-        @foreach ($data as $d)
+        @foreach ($rowData as $row)
             <tr>
-                <td>{{ $d->id }}</td>
+                <td>{{ $row->id }}</td>
             </tr>
         @endforeach
         </tbody>
     </table>
     @if ($paginate)
     <div>
-        {{ $data->links() }}
+        {{ $rowData->links() }}
     </div>
     @endif
 </div>
