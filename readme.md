@@ -30,7 +30,7 @@ Livewire tables are created in three simple steps:
 2. [Configure the table class using the available options](#configure-the-component-options)
 3. [Scaffold the table view (as needed when component class changes)](#scaffold-the-table-view)
 
-####  Create a table component class
+###  Create a table component class
 Run the make command to generate a table class:
 
 `php artisan livewire-tables:make UsersTable`
@@ -102,7 +102,7 @@ class UsersTable extends LivewireModelTable
 }
 ```
 
-#### Configure the component options
+### Configure the component options
 
 First, set your base model in the `model()` method in the following format:
 ```
@@ -137,10 +137,10 @@ Controls the field configuration for your table
 | ------------- | ------------- | ------------- |
 | title  | Set the displayed column title  | string
 | name  | Should represent the database field name. Use '.' notation for related columns, such as `user.address`  | string
-| header_class  | Set the displayed column title  | string or null
-| cell_class  | Set the displayed column title  | string or null
-| sortable  | Set the displayed column title  | true/false
-| searchable  | Set the displayed column title  | true/false or null
+| header_class  | Set a class for the `<th>` tag for this field  | string or null
+| cell_class  | Set a class for the `<td>` tag for this field  | string or null
+| sortable  | Control whether or not the column is sortable  | true/false
+| searchable  | Control whether or not the column is searchable  | true/false or null
 
 #### $css
 Used to generate CSS classes when scaffolding the table.
@@ -163,7 +163,7 @@ These can be set globally in the configuration file, or on a per-table basis in 
 | pagination_wrapper  | CSS class for `<div>` surrounding pagination buttons  | string or null
 
 
-#### Scaffold the table view
+### Scaffold the table view
 
 When ready, scaffold the table view using the scaffold command:
 
