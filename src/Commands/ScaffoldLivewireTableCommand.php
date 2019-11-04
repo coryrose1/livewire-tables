@@ -37,20 +37,13 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
     protected function viewContents()
     {
         $template = file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'table.stub');
-        // get the fields
+        
+        // We need access to the table component class to retrieve and construct the fields and css
         $tableComponent = new ReflectionClass($this->parser->baseClassNamespace.'\\'.$this->parser->className());
-        $properties = $tableComponent->getDefaultProperties();
-        $fields = $properties['fields'];
-        $cssConstructor = $tableComponent->getMethod('setCssArray');
-        $css = $cssConstructor->invoke($properties['css']);
-        $patterns = collect(array_keys($css));
-        $patterns->each(function ($pattern, $key) use ($patterns) {
-           $patterns[$key] =  '['.$pattern.']';
-        });
-        $replacements = collect(array_values($css));
-        $replacements->each(function ($replacement, $key) use ($replacements) {
-            !is_null($replacement) ? $replacements[$key] = ' class="'.$replacement.'"' : $replacements[$key] = '';
-        });
+        list($fields, $css) = $this->constructFieldsAndCss($tableComponent);
+        list($patterns, $replacements) = $this->constructCssPatternsAndReplacements($css);
+
+        // Replace the contents of the sub with header and data rows and css classes
         return preg_replace('/\[header\]/', $this->headerRows($fields, $css),
             preg_replace('/\[data\]/', $this->dataRows($fields, $css),
                 str_replace($patterns->toArray(), $replacements->toArray(), $template)));
@@ -117,5 +110,38 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
         if (isset($field['sortable']) && $field['sortable']) {
             return ' wire:click="$emit(\'sortColumn\', '.$key.')"';
         }
+    }
+
+    /**
+     * @param $css
+     * @return array
+     */
+    protected function constructCssPatternsAndReplacements($css): array
+    {
+        $patterns = collect(array_keys($css));
+        $patterns->each(function ($pattern, $key) use ($patterns) {
+            $patterns[$key] = '['.$pattern.']';
+        });
+        $replacements = collect(array_values($css));
+        $replacements->each(function ($replacement, $key) use ($replacements) {
+            ! is_null($replacement) ? $replacements[$key] = ' class="'.$replacement.'"' : $replacements[$key] = '';
+        });
+
+        return [$patterns, $replacements];
+    }
+
+    /**
+     * @param  \ReflectionClass  $tableComponent
+     * @return array
+     * @throws \ReflectionException
+     */
+    protected function constructFieldsAndCss(ReflectionClass $tableComponent): array
+    {
+        $properties = $tableComponent->getDefaultProperties();
+        $fields = $properties['fields'];
+        $cssConstructor = $tableComponent->getMethod('setCssArray');
+        $css = $cssConstructor->invoke($properties['css']);
+
+        return [$fields, $css];
     }
 }
