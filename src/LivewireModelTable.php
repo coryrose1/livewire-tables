@@ -8,12 +8,22 @@ use Livewire\Component;
 class LivewireModelTable extends Component
 {
     public $sortField = null;
-
     public $sortDir = null;
-
     public $search = null;
+    public $paginate = true;
+    public $pagination = 10;
+    public $hasSearch = true;
 
     protected $listeners = ['sortColumn' => 'setSort'];
+
+    public $fields = [];
+    public $css;
+
+
+    public function __construct($css)
+    {
+        $this->css = $this->setCssArray();
+    }
 
     public function setSort($column)
     {
@@ -93,7 +103,7 @@ class LivewireModelTable extends Component
 
     public function model()
     {
-        return null;
+        return;
     }
 
     protected function with()
@@ -112,5 +122,14 @@ class LivewireModelTable extends Component
     public function clearSearch()
     {
         $this->search = null;
+    }
+
+    protected function setCssArray(): array
+    {
+        if (isset($this->css) && $this->css !== null) {
+            return array_merge(config('livewire-tables.css'), $this->css);
+        } else {
+            return config('livewire-tables.css', []);
+        }
     }
 }
