@@ -40,8 +40,8 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
 
         // We need access to the table component class to retrieve and construct the fields and css
         $tableComponent = new ReflectionClass($this->parser->baseClassNamespace.'\\'.$this->parser->className());
-        list($fields, $css) = $this->constructFieldsAndCss($tableComponent);
-        list($patterns, $replacements) = $this->constructCssPatternsAndReplacements($css);
+        [$fields, $css] = $this->constructFieldsAndCss($tableComponent);
+        [$patterns, $replacements] = $this->constructCssPatternsAndReplacements($css);
 
         // Replace the contents of the sub with header and data rows and css classes
         return preg_replace('/\[header\]/', $this->headerRows($fields, $css),
