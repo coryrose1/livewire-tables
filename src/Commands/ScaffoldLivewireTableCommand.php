@@ -37,7 +37,7 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
     protected function viewContents()
     {
         $template = file_get_contents(__DIR__.DIRECTORY_SEPARATOR.'table.stub');
-        
+
         // We need access to the table component class to retrieve and construct the fields and css
         $tableComponent = new ReflectionClass($this->parser->baseClassNamespace.'\\'.$this->parser->className());
         list($fields, $css) = $this->constructFieldsAndCss($tableComponent);
