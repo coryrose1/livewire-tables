@@ -19,7 +19,6 @@ class LivewireModelTable extends Component
     public $fields = [];
     public $css;
 
-
     public function __construct($css)
     {
         $this->css = $this->setCssArray();
@@ -103,7 +102,6 @@ class LivewireModelTable extends Component
 
     public function model()
     {
-        return;
     }
 
     protected function with()

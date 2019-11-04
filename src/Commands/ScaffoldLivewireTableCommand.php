@@ -62,8 +62,7 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
         $cells = [];
         foreach ($fields as $key => $field) {
             $cell = '<td'.$this->getHeaderClass($field).$this->getSortableAction($key, $field).'>'.$field['title'].'</td>';
-            if (end($fields) !== $field)
-            {
+            if (end($fields) !== $field) {
                 $cell .= PHP_EOL;
             }
             array_push($cells, $cell);
@@ -76,9 +75,8 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
     {
         $cells = [];
         foreach ($fields as $key => $field) {
-            $cell = '<td'.$this->getDataClass($field).'>{{ $row->'.str_replace('.','->',$field['name']).' }}</td>';
-            if (end($fields) !== $field)
-            {
+            $cell = '<td'.$this->getDataClass($field).'>{{ $row->'.str_replace('.', '->', $field['name']).' }}</td>';
+            if (end($fields) !== $field) {
                 $cell .= PHP_EOL;
             }
             array_push($cells, $cell);
