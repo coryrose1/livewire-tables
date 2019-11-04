@@ -33,7 +33,7 @@ class [class] extends LivewireModelTable
         ]);
     }
 
-    protected function model()
+    public function model()
     {
         return User::class;
     }
