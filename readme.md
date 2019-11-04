@@ -7,6 +7,7 @@
 
 An extension for [Livewire](https://laravel-livewire.com/docs/quickstart/) that allows you to effortlessly scaffold datatables with optional pagination, search, and sort.
 
+Try it yourself using the [demo application](https://github.com/coryrose1/livewire-tables-demo)
 ## Installation
 
 Via Composer
