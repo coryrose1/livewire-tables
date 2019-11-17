@@ -133,15 +133,22 @@ class ScaffoldLivewireTableCommand extends FileManipulationCommand
     /**
      * @param  \ReflectionClass  $tableComponent
      * @return array
-     * @throws \ReflectionException
      */
     protected function constructFieldsAndCss(ReflectionClass $tableComponent): array
     {
         $properties = $tableComponent->getDefaultProperties();
         $fields = $properties['fields'];
-        $cssConstructor = $tableComponent->getMethod('setCssArray');
-        $css = $cssConstructor->invoke($properties['css']);
+        $css = $this->setCssArray($properties['css']);
 
         return [$fields, $css];
+    }
+
+    protected function setCssArray($css): array
+    {
+        if (isset($css) && $css !== null) {
+            return array_merge(config('livewire-tables.css'), $css);
+        } else {
+            return config('livewire-tables.css', []);
+        }
     }
 }

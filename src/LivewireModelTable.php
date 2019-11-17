@@ -19,12 +19,6 @@ class LivewireModelTable extends Component
     public $fields = [];
     public $css;
 
-    public function __construct($css)
-    {
-        parent::__construct($this->id);
-        $this->css = $this->setCssArray();
-    }
-
     public function setSort($column)
     {
         $this->sortField = array_key_exists('sort_field',
@@ -121,14 +115,5 @@ class LivewireModelTable extends Component
     public function clearSearch()
     {
         $this->search = null;
-    }
-
-    public static function setCssArray(): array
-    {
-        if (isset(self::$css) && self::$css !== null) {
-            return array_merge(config('livewire-tables.css'), self::$css);
-        } else {
-            return config('livewire-tables.css', []);
-        }
     }
 }
