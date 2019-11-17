@@ -28,7 +28,6 @@ class [class] extends LivewireModelTable
     public function render()
     {
         return view('[view]', [
-            'fields' => $this->fields,
             'rowData' => $this->query(),
         ]);
     }
