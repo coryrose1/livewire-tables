@@ -21,6 +21,7 @@ class LivewireModelTable extends Component
 
     public function __construct($css)
     {
+        parent::__construct($this->id);
         $this->css = $this->setCssArray();
     }
 
