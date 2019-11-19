@@ -4,10 +4,7 @@ namespace Coryrose\LivewireTables;
 
 use Coryrose\LivewireTables\Commands\MakeLivewireTableCommand;
 use Coryrose\LivewireTables\Commands\ScaffoldLivewireTableCommand;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 
 class LivewireTablesServiceProvider extends ServiceProvider
 {
