@@ -13,11 +13,10 @@ class LivewireModelTable extends Component
     public $paginate = true;
     public $pagination = 10;
     public $hasSearch = true;
-
-    protected $listeners = ['sortColumn' => 'setSort'];
-
     public $fields = [];
     public $css;
+
+    protected $listeners = ['sortColumn' => 'setSort'];
 
     public function setSort($column)
     {
@@ -35,28 +34,35 @@ class LivewireModelTable extends Component
 
     protected function query()
     {
-        $model = app($this->model());
-
-        return $this->parseQuery($model, $model->newQuery());
+        return $this->paginate($this->buildQuery());
     }
 
-    public function parseQuery($model, $query)
+    protected function querySql()
     {
+        return $this->buildQuery()->toSql();
+    }
+
+    protected function buildQuery()
+    {
+        $model = app($this->model());
+        $query = $model->newQuery();
+        $queryFields = $this->generateQueryFields($model);
         if ($this->with()) {
+            $query = $this->joinRelated($query, $model);
             if ($this->sortIsRelatedField()) {
-                $query = $this->sortByRelatedField($model, $query);
+                $query = $this->sortByRelatedField($query, $model);
             } else {
-                $query = $this->sort($query->with($this->with()));
+                $query = $this->sort($query);
             }
         } else {
             $query = $this->sort($query);
         }
-
+        $query = $this->setSelectFields($query, $queryFields);
         if ($this->hasSearch && $this->search && $this->search !== '') {
-            $query = $this->search($query);
+            $query = $this->search($query, $queryFields);
         }
 
-        return $this->paginate($query);
+        return $query;
     }
 
     protected function sort($query)
@@ -68,9 +74,18 @@ class LivewireModelTable extends Component
         return $query->orderBy($this->sortField, $this->sortDir);
     }
 
-    protected function search($query)
+    protected function search($query, $queryFields)
     {
-        return $query->whereLike(collect($this->fields)->where('searchable', true)->toArray(), $this->search);
+        $searchFields = $queryFields->where('searchable', true)->pluck('name');
+        $firstSearch = $searchFields->shift();
+        $query = $query->where($firstSearch, 'LIKE', "%{$this->search}%");
+        if ($searchFields->count() > 0) {
+            foreach ($searchFields->toArray() as $searchField) {
+                $query = $query->orWhere($searchField, 'LIKE', "%{$this->search}%");
+            }
+        }
+
+        return $query;
     }
 
     protected function paginate($query)
@@ -82,17 +97,13 @@ class LivewireModelTable extends Component
         return $query->paginate($this->pagination ?? 15);
     }
 
-    protected function sortByRelatedField($model, $query)
+    protected function sortByRelatedField($query, $model)
     {
         $relations = collect(explode('.', $this->sortField));
         $relationship = $relations->first();
         $sortField = $relations->pop();
 
-        return $query->with($this->with())
-            ->join($model->{$relationship}()->getRelated()->getTable(), $model->getTable().'.'.$model->getKeyName(),
-                '=',
-                $model->{$relationship}()->getRelated()->getTable().'.'.$model->{$relationship}()->getForeignKeyName())
-            ->orderBy($model->{$relationship}()->getRelated()->getTable().'.'.$sortField, $this->sortDir);
+        return $query->orderBy($model->{$relationship}()->getRelated()->getTable().'.'.$sortField, $this->sortDir);
     }
 
     public function model()
@@ -104,6 +115,11 @@ class LivewireModelTable extends Component
         return [];
     }
 
+    public function clearSearch()
+    {
+        $this->search = null;
+    }
+
     /**
      * @return bool
      */
@@ -112,8 +128,34 @@ class LivewireModelTable extends Component
         return $this->sortField && Str::contains($this->sortField, '.') && $this->sortDir;
     }
 
-    public function clearSearch()
+    protected function joinRelated($query, $model)
     {
-        $this->search = null;
+        $query = $query->with($this->with());
+        foreach ($this->with() as $relationship) {
+            $query = $query->leftJoin($model->{$relationship}()->getRelated()->getTable(),
+                $model->getTable().'.'.$model->getKeyName(), '=',
+                $model->{$relationship}()->getRelated()->getTable().'.'.$model->{$relationship}()->getForeignKeyName());
+        }
+
+        return $query;
+    }
+
+    protected function setSelectFields($query, $queryFields)
+    {
+        return $query->select($queryFields->pluck('name')->toArray());
+    }
+
+    protected function generateQueryFields($model)
+    {
+        return (collect($this->fields))->transform(function ($selectField) use ($model) {
+            if ($selectField['name'] == 'id') {
+                $selectField['name'] = $model->getTable().'.id';
+            } elseif (Str::contains($selectField['name'], '.')) {
+                $fieldParts = explode('.', $selectField['name']);
+                $selectField['name'] = $model->{$fieldParts[0]}()->getRelated()->getTable().'.'.$fieldParts[1];
+            }
+
+            return $selectField;
+        });
     }
 }
