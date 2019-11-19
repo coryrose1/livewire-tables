@@ -123,13 +123,13 @@ public function with()
 
 The following are editable public properties for the table class:
 
-| key  | description | value 
-| ------------- | ------------- | ------------- |
-| $paginate  | Controls whether the data query & results are paginated. If true, the class must `use WithPagination;`  | true/false
-| $pagination  | The number value to paginate with  | integer
-| $hasSearch  | Controls global appearance of search bar | bool
-| [$fields](#$fields)  | The fields configuration for your table | array
-| [$css](#$css)  | Per-table CSS settings | array
+| key  | description | value | default 
+| ------------- | ------------- | ------------- | ------------- |
+| $paginate  | Controls whether the data query & results are paginated. If true, the class must `use WithPagination;`  | bool | true
+| $pagination  | The number value to paginate with  | integer | 10
+| $hasSearch  | Controls global appearance of search bar | bool | true
+| [$fields](#$fields)  | The fields configuration for your table | array | null
+| [$css](#$css)  | Per-table CSS settings | array | null
 
 #### $fields
 Controls the field configuration for your table
