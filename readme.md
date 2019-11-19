@@ -87,7 +87,6 @@ class UsersTable extends LivewireModelTable
         public function render()
         {
             return view('livewire.tables.users-table', [
-                'fields' => $this->fields,
                 'rowData' => $this->query(),
             ]);
         }
@@ -141,8 +140,8 @@ Controls the field configuration for your table
 | name  | Should represent the database field name. Use '.' notation for related columns, such as `user.address`  | string
 | header_class  | Set a class for the `<th>` tag for this field  | string or null
 | cell_class  | Set a class for the `<td>` tag for this field  | string or null
-| sortable  | Control whether or not the column is sortable  | true/false
-| searchable  | Control whether or not the column is searchable  | true/false or null
+| sortable  | Control whether or not the column is sortable  | bool or null
+| searchable  | Control whether or not the column is searchable  | bool or null
 
 #### $css
 Used to generate CSS classes when scaffolding the table.
