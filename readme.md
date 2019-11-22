@@ -123,25 +123,28 @@ public function with()
 
 The following are editable public properties for the table class:
 
-| key  | description | value | default 
-| ------------- | ------------- | ------------- | ------------- |
-| $paginate  | Controls whether the data query & results are paginated. If true, the class must `use WithPagination;`  | bool | true
-| $pagination  | The number value to paginate with  | integer | 10
-| $hasSearch  | Controls global appearance of search bar | bool | true
-| [$fields](#$fields)  | The fields configuration for your table | array | null
-| [$css](#$css)  | Per-table CSS settings | array | null
+| key  | description | type | required | default 
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| $paginate  | Controls whether the data query & results are paginated. If true, the class must `use WithPagination;`  | bool | optional | true
+| $pagination  | The number value to paginate with  | integer | optional | 10
+| $hasSearch  | Controls global appearance of search bar | bool | optional | true
+| [$fields](#$fields)  | The fields configuration for your table | array | required | null
+| [$css](#$css)  | Per-table CSS settings | array | optional | null
 
 #### $fields
 Controls the field configuration for your table
 
-| key  | description | value 
-| ------------- | ------------- | ------------- |
-| title  | Set the displayed column title  | string
-| name  | Should represent the database field name. Use '.' notation for related columns, such as `user.address`  | string
-| header_class  | Set a class for the `<th>` tag for this field  | string or null
-| cell_class  | Set a class for the `<td>` tag for this field  | string or null
-| sortable  | Control whether or not the column is sortable  | bool or null
-| searchable  | Control whether or not the column is searchable  | bool or null
+| key  | description | value | required
+| ------------- | ------------- | ------------- | ------------- |
+| title  | Set the displayed column title  | string | required
+| name  | Should represent the database field name. Use '.' notation for related columns, such as `user.address`  | string | required
+| header_class  | Set a class for the `<th>` tag for this field  | string | optional
+| cell_class  | Set a class for the `<td>` tag for this field  | string | optional
+| searchable  | Control whether or not the column is searchable  | bool | optional
+| sortable  | Control whether or not the column is sortable  | bool | optional
+| sorted_class  | Set a class for the `<th>` tag when column is sorted  | string | optional
+| sorted_asc_class  | Set a class for the `<th>` tag when column is sorted ascending  | string | optional
+| sorted_desc_class  | Set a class for the `<th>` tag when column is sorted descending  | string | optional
 
 #### $css
 Used to generate CSS classes when scaffolding the table.
