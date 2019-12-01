@@ -33,7 +33,7 @@ trait WithPagination
 
     private function clearSelectable()
     {
-        if(method_exists($this, 'clearSelected')){
+        if(method_exists($this, 'clearSelected')) {
             $this->clearSelected();
         }
     }

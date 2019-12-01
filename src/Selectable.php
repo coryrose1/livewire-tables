@@ -12,7 +12,7 @@ trait Selectable
 
     public function selectAllRows($selected)
     {
-        $this->query()->each(function ($row) use($selected) {
+        $this->query()->each(function ($row) use ($selected) {
             $this->selected[$row->id] = $selected;
         });
     }
