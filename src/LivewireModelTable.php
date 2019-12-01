@@ -22,14 +22,13 @@ class LivewireModelTable extends Component
     {
         $this->sortField = array_key_exists('sort_field',
             $this->fields[$column]) ? $this->fields[$column]['sort_field'] : $this->fields[$column]['name'];
-        if (! $this->sortDir) {
-            $this->sortDir = 'asc';
-        } elseif ($this->sortDir == 'asc') {
+
+        if(! $this->sortDir || $this->sortDir == 'asc'){
             $this->sortDir = 'desc';
-        } else {
-            $this->sortDir = null;
-            $this->sortField = null;
+            return;
         }
+
+        $this->sortDir = 'asc';
     }
 
     protected function query()
