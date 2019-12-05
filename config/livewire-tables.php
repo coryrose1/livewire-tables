@@ -42,8 +42,7 @@ return [
         'td' => null,
         'search_wrapper' => null,
         'search_input' => null,
-        'sorted_asc' => null,
-        'sorted_desc' => null,
+        'sorted' => null,
         'pagination_wrapper' => null,
     ],
 ];

@@ -1,20 +1,21 @@
 <th
     @if (array_key_exists('sortable', $field) && $field['sortable'])
     @if (!is_null($sortField) && $sortField == $field['name'])
-    @if ($sortDir == 'asc')
-    class="{{ trim($thClass . ' ' . (array_key_exists('sorted_class', $field) ? $field['sorted_class'] : "") . ' ' . (array_key_exists('sorted_asc_class', $field) ? $field['sorted_asc_class'] : "")) }}"
-    @elseif ($sortDir == 'desc')
-    class="{{ trim($thClass . ' ' . (array_key_exists('sorted_class', $field) ? $field['sorted_class'] : "") . ' ' . (array_key_exists('sorted_desc_class', $field) ? $field['sorted_desc_class'] : "")) }}"
+    class="{{ trim($field['header_class'] . ' ' . $css['th'] . ' ' . $css['sorted']) }}"
     @else
-    class="{{ trim($thClass . ' ' . (array_key_exists('sorted_class', $field) ? $field['sorted_class'] : "")) }}"
-    @endif
-    @else
-    @if ($thClass)
-    class="{{ $thClass }}"
-    @endif
+    class="{{ trim($field['header_class'] . ' ' . $css['th']) }}"
     @endif
     wire:click="$emit('sortColumn', {{ $colNum }})"
+    @else
+    class="{{ trim($field['header_class'] . ' ' . $css['th']) }}"
     @endif
 >
     {{ $slot }}
+    @if (array_key_exists('sortable', $field) && $field['sortable'] && !is_null($sortField) && $sortField == $field['name'])
+        @if ($sortDir == 'asc')
+            <span style="float: right">&#9650;</span>
+        @elseif ($sortDir == 'desc')
+            <span style="float: right">&#9660;</span>
+        @endif
+    @endif
 </th>

@@ -142,9 +142,6 @@ Controls the field configuration for your table
 | cell_class  | Set a class for the `<td>` tag for this field  | string | optional
 | searchable  | Control whether or not the column is searchable  | bool | optional
 | sortable  | Control whether or not the column is sortable  | bool | optional
-| sorted_class  | Set a class for the `<th>` tag when column is sorted  | string | optional
-| sorted_asc_class  | Set a class for the `<th>` tag when column is sorted ascending  | string | optional
-| sorted_desc_class  | Set a class for the `<th>` tag when column is sorted descending  | string | optional
 
 #### $css
 Used to generate CSS classes when scaffolding the table.
@@ -164,6 +161,7 @@ These can be set globally in the configuration file, or on a per-table basis in 
 | td  | CSS class for `<td>`  | string or null
 | search_wrapper  | CSS class for `<div>` surrounding search  | string or null
 | search_input  | CSS class for search `<input>`  | string or null
+| sorted  | CSS class active on `<th>` when column sorted  | string or null
 | pagination_wrapper  | CSS class for `<div>` surrounding pagination buttons  | string or null
 
 

@@ -158,4 +158,13 @@ class LivewireModelTable extends Component
             return $selectField;
         });
     }
+
+    protected function prepareCssForTemplate()
+    {
+        if (isset($css) && $css !== null) {
+            return array_merge(config('livewire-tables.css'), $css);
+        } else {
+            return config('livewire-tables.css', []);
+        }
+    }
 }
